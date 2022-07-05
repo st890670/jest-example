@@ -1,3 +1,4 @@
+import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { combineReducers } from "redux";
@@ -8,19 +9,24 @@ import {
 } from "react-redux";
 import todoReduce from "./slice/todo";
 import rootSaga from "./saga";
+import React from "react";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const reducer = combineReducers({
-    todo: todoReduce,
+  todo: todoReduce,
 });
 
-export const store = configureStore({
+const store = configureStore({
   reducer,
   middleware: [sagaMiddleware],
 });
 
 sagaMiddleware.run(rootSaga);
+
+export const ReduxProvider = ({ children }: { children: React.ReactNode }) => (
+  <Provider store={store}>{children}</Provider>
+);
 
 export const useDispatch = useReduxDispatch;
 export const useSelector: TypedUseSelectorHook<ReturnType<typeof reducer>> =
