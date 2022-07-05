@@ -4,6 +4,7 @@ exports[`Input Unit Test Should match snapshot 1`] = `
 <Fragment>
   <input
     className="border rounded-[8px] py-1 px-3 focus:outline-none "
+    id="addInput"
     onChange={[Function]}
     onKeyDown={[Function]}
     placeholder="按Enter新增Todo"

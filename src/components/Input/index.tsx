@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import { useDispatch } from "../../redux";
 import { addToWorkInProcessList } from "../../redux/slice/todo";
-const Input = () => {
+const Input: React.FC = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>("");
   const [emptyWarning, setEmptyWarning] = useState<boolean>(false);
@@ -58,6 +58,7 @@ const Input = () => {
   return (
     <>
       <input
+        id="addInput"
         className={`border rounded-[8px] py-1 px-3 focus:outline-none ${
           emptyWarning ? "border-[#ff0000]" : ""
         }`}
