@@ -1,16 +1,20 @@
 import React, { useCallback, useState, useMemo } from "react";
-
+import { v4 as uuidV4 } from "uuid";
+import { useDispatch } from "../../redux";
+import { addToWorkInProcessList } from "../../redux/slice/todo";
 const Input = () => {
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>("");
   const [emptyWarning, setEmptyWarning] = useState<boolean>(false);
 
   const renderWarningText = useMemo(() => {
-    if (!emptyWarning) {
-      return <></>;
-    }
-
     return (
-      <div id="warningText" className="text-[#ff0000] text-sm mt-1 pl-3">
+      <div
+        id="warningText"
+        className={`text-[#ff0000] text-sm mt-1 pl-1 ${
+          emptyWarning ? "visible" : "invisible"
+        }`}
+      >
         必填
       </div>
     );
@@ -33,12 +37,22 @@ const Input = () => {
         return;
       }
 
-      if (!inputValue) {
+      const value = inputValue.trim();
+
+      if (!value) {
         setEmptyWarning(true);
         return;
       }
+
+      dispatch(
+        addToWorkInProcessList({
+          id: uuidV4(),
+          text: value,
+        })
+      );
+      setInputValue("");
     },
-    [inputValue]
+    [inputValue, dispatch]
   );
 
   return (
@@ -49,6 +63,7 @@ const Input = () => {
         }`}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
+        value={inputValue}
         placeholder="按Enter新增Todo"
       />
       {renderWarningText}
