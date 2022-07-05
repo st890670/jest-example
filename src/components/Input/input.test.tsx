@@ -8,7 +8,12 @@ describe("Input Unit Test", () => {
     useDispatchMock.mockReturnValue(jest.fn());
   });
 
-  it("should show warning when input value empty.", () => {
+  it("Should match snapshot", () => {
+    const component = shallow(<Input />);
+    expect(component).toMatchSnapshot();
+  });
+
+  it("Should show warning when input value empty.", () => {
     const component = shallow(<Input />);
     component.find("input").simulate("keydown", { key: "Enter" });
     expect(component.find("#warningText").exists()).toBeTruthy();
