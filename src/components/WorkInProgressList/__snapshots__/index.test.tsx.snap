@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Work In Progress List Unit Test should be same as previous snapshot 1`] = `
+<div>
+  <h2
+    className="font-bold text-lg cursor-default"
+  >
+    Work In Progress List
+  </h2>
+</div>
+`;
