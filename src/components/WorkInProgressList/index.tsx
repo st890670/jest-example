@@ -1,10 +1,11 @@
 import { useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "../../redux";
-import { markAsFinished } from "../../redux/slice/todo";
+import { markAsFinished } from "../../redux/slices/todo";
+import { todoSelector } from "../../redux/selectors/todoSelector";
 
 function WorkInProgressList() {
   const dispatch = useDispatch();
-  const workInProcessList = useSelector((state) => state.todo.workInProcess);
+  const { workInProcess: workInProcessList } = useSelector(todoSelector);
 
   const handleMarkAsFinished = useCallback(
     (uuid: string) => {

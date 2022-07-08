@@ -2,16 +2,16 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { put, select, takeLatest } from "redux-saga/effects";
 
 import {
-  addToWorkInProcessList,
+  addToWorkInProcessList as addToWorkInProgressList,
   updateWorkInProgressList,
   markAsFinished,
   updateFinishedList,
-} from "../slice/todo";
+} from "../slices/todo";
 
-function* addToWorkInProcessListSaga(action: PayloadAction<Item>) {
-  const prevList: Array<Item> = yield select(
-    (state) => state.todo.workInProcess
-  );
+import { todoSelector } from "../selectors/todoSelector";
+
+export function* addToWorkInProgressListSaga(action: PayloadAction<Item>) {
+  const { workInProcess: prevList } = yield select(todoSelector);
 
   const newItem = action.payload;
   const clone = [...prevList];
@@ -22,7 +22,7 @@ function* addToWorkInProcessListSaga(action: PayloadAction<Item>) {
 
 function* markAsFinishedSaga(action: PayloadAction<string>) {
   const targetIndex = action.payload;
-  const { workInProcess, finished } = yield select((state) => state.todo);
+  const { workInProcess, finished } = yield select(todoSelector);
   const item = workInProcess.find(
     (rowData: Item) => rowData.id === targetIndex
   );
@@ -36,14 +36,14 @@ function* markAsFinishedSaga(action: PayloadAction<string>) {
   yield put(updateFinishedList([...finished, item]));
 }
 
-function* watchAddToWorkInProcessList() {
-  yield takeLatest(addToWorkInProcessList, addToWorkInProcessListSaga);
+function* watchAddToWorkInProgressList() {
+  yield takeLatest(addToWorkInProgressList, addToWorkInProgressListSaga);
 }
 
 function* watchMarkAsFinished() {
   yield takeLatest(markAsFinished, markAsFinishedSaga);
 }
 
-const all = [watchAddToWorkInProcessList(), watchMarkAsFinished()];
+const all = [watchAddToWorkInProgressList(), watchMarkAsFinished()];
 
 export default all;

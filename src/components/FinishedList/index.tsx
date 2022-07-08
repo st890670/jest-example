@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { useSelector } from "../../redux";
+import { todoSelector } from "../../redux/selectors/todoSelector";
 
 function FinishedList() {
-  const finishedList = useSelector((state) => state.todo.finished);
+  const { finished: finishedList } = useSelector(todoSelector);
 
   const renderList = useMemo(
     () =>

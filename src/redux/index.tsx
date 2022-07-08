@@ -7,13 +7,13 @@ import {
   useSelector as useReduxSelector,
   TypedUseSelectorHook,
 } from "react-redux";
-import todoReduce from "./slice/todo";
-import rootSaga from "./saga";
+import todoReduce from "./slices/todo";
+import rootSaga from "./sagas";
 import React from "react";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
   todo: todoReduce,
 });
 

@@ -9,5 +9,5 @@
 
 - Language: `Typescript`
 - Framework: `Create React App - 17`
-- Redux: `React Redux`, `Redux Toolkit`, `Redux Saga`
+- Redux: `React Redux`, `Redux Toolkit`, `Redux Saga`, `Redux Saga Test Plan`
 - Testing: `Jest`, `Enzyme`

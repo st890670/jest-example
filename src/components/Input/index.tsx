@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import { useDispatch } from "../../redux";
-import { addToWorkInProcessList } from "../../redux/slice/todo";
+import { addToWorkInProcessList } from "../../redux/slices/todo";
 const Input: React.FC = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>("");
