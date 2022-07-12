@@ -8,30 +8,34 @@ import {
   updateFinishedList,
 } from "../slices/todo";
 
-import { todoSelector } from "../selectors/todoSelector";
+import {
+  workInProgressSelector,
+  finishedSelector,
+} from "../selectors/todoSelector";
 
 export function* addToWorkInProgressListSaga(action: PayloadAction<Item>) {
-  const { workInProcess: prevList } = yield select(todoSelector);
+  const prevList: Array<Item> = yield select(workInProgressSelector);
 
   const newItem = action.payload;
+
   const clone = [...prevList];
   clone.push(newItem);
-
   yield put(updateWorkInProgressList(clone));
 }
 
 function* markAsFinishedSaga(action: PayloadAction<string>) {
   const targetIndex = action.payload;
-  const { workInProcess, finished } = yield select(todoSelector);
-  const item = workInProcess.find(
+  const workInProgress: Array<Item> = yield select(workInProgressSelector);
+  const item = workInProgress.find(
     (rowData: Item) => rowData.id === targetIndex
-  );
+  ) as Item;
 
   yield put(
     updateWorkInProgressList(
-      workInProcess.filter((rowData: Item) => rowData.id !== targetIndex)
+      workInProgress.filter((rowData: Item) => rowData.id !== targetIndex)
     )
   );
+  const finished: Array<Item> = yield select(finishedSelector);
 
   yield put(updateFinishedList([...finished, item]));
 }

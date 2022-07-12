@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const todoSlice = createSlice({
   name: "todo",
   initialState: {
-    workInProcess: [] as Array<Item>,
+    workInProgress: [] as Array<Item>,
     finished: [] as Array<Item>,
   },
   reducers: {
@@ -12,7 +12,7 @@ const todoSlice = createSlice({
       const todoList = action.payload;
       return {
         ...state,
-        workInProcess: todoList,
+        workInProgress: todoList,
       };
     },
     markAsFinished(_state, _action: PayloadAction<string>) {},

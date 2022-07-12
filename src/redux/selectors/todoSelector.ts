@@ -1,5 +1,8 @@
 import { reducer } from "../index";
 
-export const todoSelector = (state: ReturnType<typeof reducer>) => state.todo;
+export const workInProgressSelector = (state: ReturnType<typeof reducer>) =>
+  state.todo.workInProgress;
+export const finishedSelector = (state: ReturnType<typeof reducer>) =>
+  state.todo.finished;
 
-export default todoSelector;
+export default { workInProgressSelector, finishedSelector };

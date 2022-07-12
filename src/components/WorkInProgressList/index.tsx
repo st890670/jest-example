@@ -1,12 +1,11 @@
 import { useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "../../redux";
 import { markAsFinished } from "../../redux/slices/todo";
-import { todoSelector } from "../../redux/selectors/todoSelector";
+import { workInProgressSelector } from "../../redux/selectors/todoSelector";
 
 function WorkInProgressList() {
   const dispatch = useDispatch();
-  const { workInProcess: workInProcessList } = useSelector(todoSelector);
-
+  const workInProgressList = useSelector(workInProgressSelector);
   const handleMarkAsFinished = useCallback(
     (uuid: string) => {
       dispatch(markAsFinished(uuid));
@@ -14,19 +13,21 @@ function WorkInProgressList() {
     [dispatch]
   );
 
-  const renderList = useMemo(
-    () =>
-      workInProcessList.map((item) => (
-        <div
-          key={item.id}
-          className="cursor-default"
-          onClick={() => handleMarkAsFinished(item.id)}
-        >
-          {item.text}
-        </div>
-      )),
-    [workInProcessList, handleMarkAsFinished]
-  );
+  const renderList = useMemo(() => {
+    if (!workInProgressList) {
+      return <></>;
+    }
+
+    return workInProgressList.map((item) => (
+      <div
+        key={item.id}
+        className="cursor-default"
+        onClick={() => handleMarkAsFinished(item.id)}
+      >
+        {item.text}
+      </div>
+    ));
+  }, [workInProgressList, handleMarkAsFinished]);
 
   return (
     <div>
